@@ -1,0 +1,67 @@
+﻿@{
+    
+    var bookid = Page.Book.BookId;
+    var db = Database.Open("Books");    
+    var authors = db.Query("SELECT AuthorId, FirstName + ' ' + LastName AS AuthorName FROM Authors");
+    var categories = db.Query("SELECT CategoryId, Category FROM Categories");
+    var sql = "SELECT BookId, Title, ISBN, Description, CategoryId, AuthorId, DatePublished FROM Books WHERE BookId = @0";
+    var book = db.QuerySingle(sql, bookid);
+
+}
+
+
+    <form id="edit-book-form" action="@Href("~/Methods/EditBook")">
+        <fieldset>
+            <legend>Edit Book</legend>
+         <div class="row">
+                <span class="label"><label for="title">Title:</label></span>
+                <input type="text" name="title" id="title" size="50" value="@book.Title" />
+            </div>
+            <div class="row">
+                <span class="label"><label for="isbn">ISBN:</label></span>
+                <input type="text" name="isbn" id="isbn" size="20" value="@book.ISBN" />
+            </div>
+            <div class="row">
+                <span class="label"><label for="description">Description:</label></span>
+                <textarea cols="50" rows="8" name="description" id="description">@book.Description</textarea>
+            </div>
+            <div class="row">
+                <span class="label"><label for="authorId">Author:</label></span>
+                <select name="authorId" id="authorId">
+                    <option value="">-- Select Author --</option>
+                @{
+                    foreach(var author in authors){
+                        if(author.AuthorId == book.AuthorId){
+                            <option value="@author.AuthorId" selected="selected">@author.AuthorName</option>
+                        } else {
+                            <option value="@author.AuthorId">@author.AuthorName</option>
+                        }
+                    }
+                }
+                </select>
+            </div>
+            <div class="row">
+                <span class="label"><label for="categoryId">Category:</label></span>
+                <select name="categoryId" id="categoryId">
+                    <option value="">-- Select Category --</option>
+                @{
+                    foreach(var category in categories){
+                        if(category.CategoryId == book.CategoryId){
+                            <option value="@category.CategoryId" selected="selected">@category.Category</option>
+                        } else {
+                            <option value="@category.CategoryId">@category.Category</option>
+                        }        
+                    }
+                }
+                </select>
+            </div>
+            <div class="row">
+                <span class="label"><label for="datePublished">Date Published:</label></span>
+                <input type="text" id="datePublished" name="datePublished" value="@book.DatePublished.ToString("d")" />
+            </div>    
+            <div class="row">
+                <span class="label">&nbsp;</span>
+                <input type="submit" id="submit" name="submit" value="Submit" />
+            </div> 
+            </fieldset>
+        </form>

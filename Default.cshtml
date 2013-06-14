@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "/Shared/_Layout.cshtml";
+    var db = Database.Open("Books");
+    var sql = "Select BookId, Title, ISBN, Description, FirstName, LastName, Category From Books " + 
+               "Inner Join Authors on Books.AuthorId = Authors.AuthorId " + 
+               "Inner Join Categories on Books.CategoryId = Categories.CategoryId";
+    var data =  db.Query(sql);
+    var grid = new WebGrid(data);
+}
+<div id="grid">
+@grid.GetHtml(
+    tableStyle : "table",
+    alternatingRowStyle : "alternate",
+    selectedRowStyle: "selected",
+    headerStyle : "header",    
+    columns: grid.Columns(
+        grid.Column(
+            header:"", 
+            format:@<text>@item.GetSelectLink("Edit")</text>
+            ),
+        grid.Column(
+            columnName : "Author",
+            format: @<text>@item.FirstName @item.LastName</text>
+            ),
+        grid.Column(
+            columnName : "Title",
+            format: @<text>@item.Title</text>
+            ),
+        grid.Column(
+            columnName : "Category"
+            ) 
+    )
+)
+</div>
+
+@if(grid.HasSelection){
+    var book = grid.SelectedRow;
+    @RenderPage("~/Partials/EditBook.cshtml", new { Book = book } )
+}

@@ -1,0 +1,66 @@
+﻿body, input, textarea, select {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+    color: #669;
+    line-height: 1.6em;
+}
+a{
+    color: #6078BF;
+}
+fieldset{
+    width: 550px;
+    margin: 45px;
+}
+
+legend{
+    color: #6078bf;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.table
+{
+	background: #fff;
+	margin: 45px;
+	width: 550px;
+	border-collapse: collapse;
+	text-align: left;
+}
+.table th
+{
+	font-size: 14px;
+	font-weight: normal;
+	color: #039;
+	padding: 10px 8px;
+	border-bottom: 2px solid #6678b1;
+}
+
+.table td
+{
+	border-bottom: 1px solid #ccc;
+	padding: 6px 8px;
+}
+
+.alternate{
+    background: #e6f4ff;
+}
+
+.row
+{
+  clear: both;
+}
+
+.label
+{
+  float: left;
+  text-align: right;
+  width: 100px;
+  padding-right: 5px;
+}
+
+.selected{
+    background: #ffffbf;
+}
+
+
+
